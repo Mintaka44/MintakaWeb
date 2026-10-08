@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Petit Nantais | Restaurant & Cuisine de Saison à Nantes</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#1e2923',
+                            green: '#2e4f4f',
+                            sage: '#4b6b61',
+                            cream: '#fbfada',
+                            sand: '#f4f1ea',
+                            accent: '#d88555'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f4f1ea; color: #1e2923; }
+        h1, h2, h3, .font-serif { font-family: 'Playfair Display', serif; }
+        .hero-pattern {
+            background-image: linear-gradient(rgba(30, 41, 35, 0.65), rgba(30, 41, 35, 0.65)), url('https://placehold.co/1920x1080/2e4f4f/fbfada?text=Le+Petit+Nantais');
+            background-size: cover;
+            background-position: center;
+        }
+    </style>
+</head>
+<body class="bg-brand-sand text-brand-dark antialiased selection:bg-brand-accent selection:text-white">
+
+    <header id="header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-brand-dark/90 backdrop-blur-md text-white border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#" class="flex items-center gap-2 group">
+                <span class="font-serif text-2xl font-bold tracking-wide text-brand-cream group-hover:text-brand-accent transition-colors">Le Petit Nantais</span>
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide">
+                <a href="#concept" class="hover:text-brand-accent transition-colors">Philosophie</a>
+                <a href="#equipe" class="hover:text-brand-accent transition-colors">L'Équipe</a>
+                <a href="#menu-semaine" class="hover:text-brand-accent transition-colors">Menu de la semaine</a>
+                <a href="#carte" class="hover:text-brand-accent transition-colors">La Carte</a>
+                <a href="#producteurs" class="hover:text-brand-accent transition-colors">Producteurs</a>
+                <a href="#contact" class="hover:text-brand-accent transition-colors">Contact</a>
+            </nav>
+
+            <div class="hidden md:block">
+                <a href="#reservation" class="bg-brand-accent hover:bg-opacity-90 text-white px-5 py-2.5 rounded-full text-sm font-medium transition-all shadow-md transform hover:-translate-y-0.5">
+                    Réserver une table
+                </a>
+            </div>
+
+            <!-- Mobile menu button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+
+        <!-- Mobile menu dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-dark border-t border-white/10 px-6 py-6 space-y-4">
+            <a href="#concept" class="block text-lg hover:text-brand-accent transition-colors mobile-link">Philosophie</a>
+            <a href="#equipe" class="block text-lg hover:text-brand-accent transition-colors mobile-link">L'Équipe</a>
+            <a href="#menu-semaine" class="block text-lg hover:text-brand-accent transition-colors mobile-link">Menu de la semaine</a>
+            <a href="#carte" class="block text-lg hover:text-brand-accent transition-colors mobile-link">La Carte</a>
+            <a href="#producteurs" class="block text-lg hover:text-brand-accent transition-colors mobile-link">Producteurs</a>
+            <a href="#contact" class="block text-lg hover:text-brand-accent transition-colors mobile-link">Contact</a>
+            <div class="pt-2">
+                <a href="#reservation" class="block text-center bg-brand-accent text-white py-3 rounded-full font-medium mobile-link">
+                    Réserver une table
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero-pattern h-screen flex items-center justify-center text-center px-4 relative">
+            <div class="max-w-3xl mx-auto space-y-6">
+                <span class="inline-block uppercase tracking-[0.3em] text-xs text-brand-cream bg-white/10 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/20">
+                    Bistrot de Quartier • Centre-ville de Nantes
+                </span>
+                <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold text-white leading-tight">
+                    Une cuisine sincère, de saison & locale
+                </h1>
+                <p class="text-brand-cream/90 text-lg sm:text-xl font-light max-w-2xl mx-auto">
+                    Christophe en cuisine et Marie en salle vous accueillent dans un cadre chaleureux au cœur de Nantes pour célébrer le terroir ligérien.
+                </p>
+                <div class="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+                    <a href="#reservation" class="w-full sm:w-auto bg-brand-accent hover:bg-opacity-90 text-white px-8 py-3.5 rounded-full font-medium transition-all shadow-lg">
+                        Réserver votre table
+                    </a>
+                    <a href="#menu-semaine" class="w-full sm:w-auto bg-white/10 hover:bg-white/20 text-white border border-white/30 backdrop-blur-sm px-8 py-3.5 rounded-full font-medium transition-all">
+                        Découvrir le menu du moment
+                    </a>
+                </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/70 animate-bounce hidden sm:block">
+                <a href="#concept"><i class="fa-solid fa-chevron-down text-xl"></i></a>
+            </div>
+        </section>
+
+        <section id="concept" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <div class="space-y-6">
+                    <span class="text-brand-sage uppercase tracking-widest text-xs font-semibold">Notre Philosophie</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl lg:text-5xl font-bold text-brand-dark leading-tight">
+                        Le goût authentique des produits de notre région
+                    </h2>
+                    <p class="text-brand-dark/80 leading-relaxed">
+                        Niché au cœur du centre-ville de Nantes, Le Petit Nantais est né de l'envie simple de proposer une cuisine française traditionnelle, généreuse et profondément ancrée dans son territoire. Pas de carte interminable ni de produits venus de l'autre bout du monde : ici, tout est fait maison, chaque jour, avec passion.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 pt-4">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5">
+                            <div class="w-12 h-12 bg-brand-sage/10 text-brand-sage rounded-xl flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-carrot"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg mb-1">100% Local & De Saison</h3>
+                            <p class="text-sm text-brand-dark/70">Partenariats étroits avec les maraîchers et éleveurs locaux autour de Nantes.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5">
+                            <div class="w-12 h-12 bg-brand-sage/10 text-brand-sage rounded-xl flex items-center justify-center text-xl mb-4">
+                                <i class="fa-solid fa-utensils"></i>
+                            </div>
+                            <h3 class="font-serif font-bold text-lg mb-1">Carte Courte</h3>
+                            <p class="text-sm text-brand-dark/70">3 entrées, 3 plats, 3 desserts renouvelés au gré des arrivages et des saisons.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl bg-brand-sage/20">
+                        <img src="restaurant.jpg" alt="Salle du restaurant" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700">
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 bg-brand-cream p-6 rounded-2xl shadow-lg border border-brand-dark/10 max-w-xs hidden sm:block">
+                        <p class="font-serif italic text-brand-green font-medium text-lg">"Travailler avec les producteurs locaux, c'est respecter la terre et donner du sens à chaque assiette."</p>
+                        <span class="block mt-2 text-xs font-semibold tracking-wider text-brand-dark/60">— Christophe, Chef cuisinier</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="equipe" class="bg-brand-green text-white py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                    <span class="text-brand-cream/80 uppercase tracking-widest text-xs font-semibold">L'âme du lieu</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-cream">Christophe & Marie</h2>
+                    <p class="text-brand-cream/80 text-sm sm:text-base">Complices dans la vie comme derrière les fourneaux et en salle, ils vous reçoivent comme à la maison.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
+                    <!-- Christophe -->
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm flex flex-col items-center text-center space-y-6">
+                        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-brand-accent shadow-lg">
+                            <img src="christophe.jpg" alt="Christophe - Cuisinier" class="w-full h-full object-cover">
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs uppercase tracking-widest text-brand-accent font-semibold">Le Cuisinier</span>
+                            <h3 class="font-serif text-2xl font-bold text-brand-cream">Christophe</h3>
+                        </div>
+                        <p class="text-brand-cream/80 text-sm leading-relaxed">
+                            Formé dans les traditions de la gastronomie française, Christophe sublime les produits bruts avec délicatesse. Amoureux des sauces mijotées et des cuissons justes, il réinvente les classiques selon l'humeur du marché de Talensac.
+                        </p>
+                    </div>
+
+                    <!-- Marie -->
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 backdrop-blur-sm flex flex-col items-center text-center space-y-6">
+                        <div class="w-32 h-32 rounded-full overflow-hidden border-2 border-brand-accent shadow-lg">
+                            <img src="marie.jpg" alt="Marie - Gestion de salle" class="w-full h-full object-cover">
+                        </div>
+                        <div class="space-y-2">
+                            <span class="text-xs uppercase tracking-widest text-brand-accent font-semibold">La Salle & Vins</span>
+                            <h3 class="font-serif text-2xl font-bold text-brand-cream">Marie</h3>
+                        </div>
+                        <p class="text-brand-cream/80 text-sm leading-relaxed">
+                            Souriante et attentionnée, Marie veille sur la salle avec une élégance naturelle. Elle saura vous conseiller le vin parfait pour accompagner votre plat, sélectionné auprès de vignerons indépendants de la vallée de la Loire.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="menu-semaine" class="py-24 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="bg-white rounded-3xl shadow-xl border border-brand-dark/10 overflow-hidden">
+                <div class="bg-brand-green text-white p-8 sm:p-12 text-center relative overflow-hidden">
+                    <div class="absolute -right-12 -top-12 w-40 h-40 bg-white/5 rounded-full pointer-events-none"></div>
+                    <span class="text-xs uppercase tracking-widest text-brand-cream font-semibold bg-white/10 px-4 py-1.5 rounded-full">Chaque semaine en plus de la carte</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-cream mt-4">Menu du Semainier</h2>
+                    <p class="text-brand-cream/80 text-sm mt-2">Valable du mardi au vendredi midi • Inspiré par le marché du moment</p>
+                </div>
+                
+                <div class="p-8 sm:p-12 space-y-8">
+                    <div class="text-center pb-6 border-b border-brand-dark/10">
+                        <h3 class="font-serif text-2xl font-bold text-brand-dark">Formule Déjeuner</h3>
+                        <p class="text-brand-dark/60 text-sm mt-1">Entrée + Plat ou Plat + Dessert : <span class="font-semibold text-brand-dark">21€</span> | Entrée + Plat + Dessert : <span class="font-semibold text-brand-dark">26€</span></p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+                        <div class="space-y-3">
+                            <div class="text-brand-accent font-semibold text-sm uppercase tracking-wider">L'Entrée de la Semaine</div>
+                            <h4 class="font-serif font-bold text-xl text-brand-dark">Velouté de potimarron rôti</h4>
+                            <p class="text-sm text-brand-dark/70">Éclats de châtaignes des Cévennes et croûtons au beurre demi-sel de Guérande.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="text-brand-accent font-semibold text-sm uppercase tracking-wider">Le Plat de la Semaine</div>
+                            <h4 class="font-serif font-bold text-xl text-brand-dark">Filet de lieu jaune de ligne</h4>
+                            <p class="text-sm text-brand-dark/70">Mousseline de panais au thym frais, émulsion au beurre blanc nantais.</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="text-brand-accent font-semibold text-sm uppercase tracking-wider">Le Dessert de la Semaine</div>
+                            <h4 class="font-serif font-bold text-xl text-brand-dark">Tarte tatin tiède</h4>
+                            <p class="text-sm text-brand-dark/70">Pommes bio du Pays de Retz, généreuse quenelle de crème fraîche épaisse.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-brand-sand/50 p-6 rounded-2xl text-center text-xs text-brand-dark/70 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-circle-info text-brand-accent"></i>
+                        <span>Le menu change chaque mardi matin en fonction des arrivages directs de nos maraîchers partenaires.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="carte" class="bg-brand-sand py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-sage uppercase tracking-widest text-xs font-semibold">Tradition & Authenticité</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">La Carte du Moment</h2>
+                <p class="text-brand-dark/70 text-sm sm:text-base">3 entrées, 3 plats, 3 desserts élaborés avec soin par le chef Christophe.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                <!-- Entrées -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-dark/5 space-y-8">
+                    <div class="border-b border-brand-dark/10 pb-4 text-center">
+                        <span class="text-brand-accent font-semibold text-xs tracking-widest uppercase">Pour Commencer</span>
+                        <h3 class="font-serif text-2xl font-bold text-brand-dark mt-1">Les Entrées</h3>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Œuf bio mollet "Poule en Liberté"</span>
+                                <span class="text-brand-accent font-sans text-base">9 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Crème de champignons sauvages des forêts nantaises, mouillettes au levain.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Tartare de betteraves anciennes</span>
+                                <span class="text-brand-accent font-sans text-base">10 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Chèvre frais de la ferme locale, noisettes torréfiées et vinaigrette au miel de Loire.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Terrine de campagne maison</span>
+                                <span class="text-brand-accent font-sans text-base">11 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Piments doux, pickles de légumes croquants du maraîcher et pain de campagne grillé.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Plats -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-dark/5 space-y-8">
+                    <div class="border-b border-brand-dark/10 pb-4 text-center">
+                        <span class="text-brand-accent font-semibold text-xs tracking-widest uppercase">Le Cœur du Repas</span>
+                        <h3 class="font-serif text-2xl font-bold text-brand-dark mt-1">Les Plats</h3>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Suprême de volaille fermière</span>
+                                <span class="text-brand-accent font-sans text-base">21 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Jus corsé au muscadet, écrasé de pommes de terre à l'huile d'olive et poêlée de champignons.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Pavé de merlu blanc rôti</span>
+                                <span class="text-brand-accent font-sans text-base">23 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Légumes racines glacés au bouillon de légumes, émulsion d'herbes fraîches.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Poitrine de cochon confite 12h</span>
+                                <span class="text-brand-accent font-sans text-base">22 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Laquée au jus de cuisson et cidre fermier, polenta crémeuse au vieux Cantal.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desserts -->
+                <div class="bg-white p-8 rounded-3xl shadow-sm border border-brand-dark/5 space-y-8">
+                    <div class="border-b border-brand-dark/10 pb-4 text-center">
+                        <span class="text-brand-accent font-semibold text-xs tracking-widest uppercase">La Douceur Finale</span>
+                        <h3 class="font-serif text-2xl font-bold text-brand-dark mt-1">Les Desserts</h3>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Le traditionnel Gâteau Nantais</span>
+                                <span class="text-brand-accent font-sans text-base">9 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Imbibé au rhum et citron vert, revisité avec finesse par Christophe.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Poire pochée aux épices douces</span>
+                                <span class="text-brand-accent font-sans text-base">9.5 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Infusion de verveine du jardin, crumble croustillant aux amandes.</p>
+                        </div>
+
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-baseline font-serif font-bold text-lg text-brand-dark">
+                                <span>Mousse au chocolat grand cru</span>
+                                <span class="text-brand-accent font-sans text-base">8.5 €</span>
+                            </div>
+                            <p class="text-sm text-brand-dark/70">Fèves de cacao concassées et tuile dentelle croustillante.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="producteurs" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <span class="text-brand-sage uppercase tracking-widest text-xs font-semibold">Circuits Courts</span>
+                <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">Nos Producteurs Locaux</h2>
+                <p class="text-brand-dark/70 text-sm sm:text-base">Nous travaillons main dans la main avec des artisans passionnés de la région nantaise.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5 text-center space-y-3">
+                    <div class="w-14 h-14 bg-brand-sage/10 text-brand-sage rounded-2xl mx-auto flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg">Maraîchage Bio de la Sèvre</h3>
+                    <p class="text-xs text-brand-dark/60">Vertou (44)</p>
+                    <p class="text-xs text-brand-dark/80 pt-2">Légumes frais de saison cultivés dans le respect de la biodiversité.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5 text-center space-y-3">
+                    <div class="w-14 h-14 bg-brand-sage/10 text-brand-sage rounded-2xl mx-auto flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-cow"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg">Ferme de la Garenne</h3>
+                    <p class="text-xs text-brand-dark/60">Blain (44)</p>
+                    <p class="text-xs text-brand-dark/80 pt-2">Viandes fermières rigoureusement sélectionnées et produits laitiers artisanaux.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5 text-center space-y-3">
+                    <div class="w-14 h-14 bg-brand-sage/10 text-brand-sage rounded-2xl mx-auto flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-fish"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg">La Mareée Nantaise</h3>
+                    <p class="text-xs text-brand-dark/60">Criée du Croisic & Loire</p>
+                    <p class="text-xs text-brand-dark/80 pt-2">Poissons frais de ligne pêchés sur nos côtes bretonnes et vendéennes.</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-brand-dark/5 text-center space-y-3">
+                    <div class="w-14 h-14 bg-brand-sage/10 text-brand-sage rounded-2xl mx-auto flex items-center justify-center text-2xl">
+                        <i class="fa-solid fa-wine-glass"></i>
+                    </div>
+                    <h3 class="font-serif font-bold text-lg">Vignoble du Landais</h3>
+                    <p class="text-xs text-brand-dark/60">Val de Loire</p>
+                    <p class="text-xs text-brand-dark/80 pt-2">Muscadet Sèvre-et-Maine et vins bio de vignerons indépendants.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="reservation" class="bg-brand-green text-white py-24 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                    <span class="text-brand-cream/80 uppercase tracking-widest text-xs font-semibold">Venez nous rendre visite</span>
+                    <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-cream">Réserver votre table</h2>
+                    <p class="text-brand-cream/80 text-sm sm:text-base">Marie vous confirmera votre réservation par e-mail ou téléphone dans les plus brefs délais.</p>
+                </div>
+
+                <form id="reservation-form" class="bg-white/5 border border-white/10 p-8 sm:p-12 rounded-3xl backdrop-blur-sm space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Nom complet</label>
+                            <input type="text" id="res-name" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-brand-accent transition-colors" placeholder="Jean Dupont">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Adresse email</label>
+                            <input type="email" id="res-email" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-brand-accent transition-colors" placeholder="jean.dupont@exemple.fr">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Téléphone</label>
+                            <input type="tel" id="res-phone" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-brand-accent transition-colors" placeholder="06 12 34 56 78">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Date</label>
+                            <input type="date" id="res-date" required class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors [color-scheme:dark]">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Service & Heure</label>
+                            <select id="res-time" required class="w-full bg-brand-dark border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                                <option value="" disabled selected>Choisir un créneau</option>
+                                <option value="midi-1200">Midi — 12h00</option>
+                                <option value="midi-1245">Midi — 12h45</option>
+                                <option value="soir-1930">Soir — 19h30</option>
+                                <option value="soir-2030">Soir — 20h30</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Nombre de convives</label>
+                            <select id="res-guests" required class="w-full bg-brand-dark border border-white/20 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-brand-accent transition-colors">
+                                <option value="1">1 personne</option>
+                                <option value="2" selected>2 personnes</option>
+                                <option value="3">3 personnes</option>
+                                <option value="4">4 personnes</option>
+                                <option value="5">5 personnes</option>
+                                <option value="6">6 personnes (max)</option>
+                            </select>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-xs uppercase tracking-wider text-brand-cream/80 font-medium">Demandes particulières / Allergies</label>
+                            <input type="text" id="res-notes" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-white placeholder-white/40 focus:outline-none focus:border-brand-accent transition-colors" placeholder="Chaise haute, régime végétarien...">
+                        </div>
+                    </div>
+
+                    <div class="pt-4 text-center">
+                        <button type="submit" class="w-full sm:w-auto bg-brand-accent hover:bg-opacity-90 text-white font-medium px-10 py-4 rounded-full transition-all shadow-lg text-lg">
+                            Confirmer la réservation
+                        </button>
+                    </div>
+
+                    <div id="reservation-success" class="hidden bg-emerald-500/20 border border-emerald-500/50 text-emerald-200 p-4 rounded-2xl text-center text-sm">
+                        <i class="fa-solid fa-circle-check text-emerald-400 mr-2"></i> Merci ! Votre demande de réservation a bien été transmise à Marie. Nous vous confirmerons cela par SMS ou e-mail sous peu.
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <section id="contact" class="py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="space-y-4">
+                        <span class="text-brand-sage uppercase tracking-widest text-xs font-semibold">Informations pratiques</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-brand-dark">Venez nous rendre visite</h2>
+                        <p class="text-brand-dark/70">Idéalement situé au cœur de Nantes, à deux pas de la place Graslin et du marché de Talensac.</p>
+                    </div>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 text-brand-green rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg">Adresse</h3>
+                                <p class="text-brand-dark/70 text-sm">14 Rue Racine, 44000 Nantes</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 text-brand-green rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-clock"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg">Horaires d'ouverture</h3>
+                                <p class="text-brand-dark/70 text-sm">Mardi au Samedi : 12h00 - 14h00 et 19h30 - 22h00</p>
+                                <p class="text-brand-dark/50 text-xs mt-1">Fermé le dimanche et le lundi</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-brand-green/10 text-brand-green rounded-xl flex items-center justify-center shrink-0 text-lg">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-serif font-bold text-lg">Téléphone</h3>
+                                <p class="text-brand-dark/70 text-sm">02 40 00 00 00</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-brand-sage/10 p-4 rounded-3xl border border-brand-dark/10 h-[400px] flex items-center justify-center relative overflow-hidden">
+                    <!-- Stylized map placeholder or iframe representation -->
+                    <div class="text-center space-y-3 p-6 bg-white/80 backdrop-blur-sm rounded-2xl shadow-md max-w-sm">
+                        <div class="text-brand-accent text-3xl"><i class="fa-solid fa-map-location-dot"></i></div>
+                        <h3 class="font-serif font-bold text-xl text-brand-dark">Centre-ville de Nantes</h3>
+                        <p class="text-xs text-brand-dark/70">À 5 min à pied du tramway (Lignes 1, 2 & 3 - Station Commerce ou Médiathèque).</p>
+                        <a href="https://maps.google.com/?q=14+Rue+Racine+44000+Nantes" target="_blank" rel="noopener noreferrer" class="inline-block bg-brand-green text-white px-4 py-2 rounded-xl text-xs font-medium hover:bg-opacity-90 transition-all">
+                            Ouvrir dans Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-brand-dark text-white py-12 px-4 sm:px-6 lg:px-8 border-t border-white/10">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center md:text-left">
+            <div class="space-y-2">
+                <span class="font-serif text-2xl font-bold text-brand-cream">Le Petit Nantais</span>
+                <p class="text-xs text-brand-cream/60">Cuisine traditionnelle française & produits locaux.</p>
+            </div>
+            <div class="flex justify-center space-x-6 text-xl text-brand-cream/80">
+                <a href="#" class="hover:text-brand-accent transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-brand-accent transition-colors"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-brand-accent transition-colors"><i class="fa-brands fa-tripadvisor"></i></a>
+            </div>
+            <div class="text-xs text-brand-cream/50 text-center md:text-right space-y-1">
+                <p>&copy; 2026 Le Petit Nantais. Tous droits réservés.</p>
+                <p>Imaginé avec passion par Christophe & Marie.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Header style on scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shadow-md');
+            } else {
+                header.classList.remove('shadow-md');
+            }
+        });
+
+        // Handle reservation form submission
+        const reservationForm = document.getElementById('reservation-form');
+        const successMessage = document.getElementById('reservation-success');
+
+        reservationForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Show success notification
+            successMessage.classList.remove('hidden');
+            reservationForm.reset();
+
+            // Hide success message after 6 seconds
+            setTimeout(() => {
+                successMessage.classList.add('hidden');
+            }, 6000);
+        });
+
+        // Set min date for reservation input to today
+        const dateInput = document.getElementById('res-date');
+        if (dateInput) {
+            const today = new Date().toISOString().split('T')[0];
+            dateInput.min = today;
+        }
+    </script>
+</body>
+</html>

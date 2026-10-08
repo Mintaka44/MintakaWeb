@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Au Bon Pain de Florence | Boulangerie - Pâtisserie - Briocherie - Viennoiseries à Sainte-Florence (Vendée)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        amberCustom: {
+                            50: '#fdf8f0',
+                            100: '#fbeedb',
+                            200: '#f5d7b0',
+                            300: '#edb97b',
+                            600: '#c27d38',
+                            700: '#a36228',
+                            800: '#854e24',
+                            900: '#6c3f20',
+                        },
+                        chocolate: {
+                            800: '#3d2314',
+                            900: '#26150b'
+                        },
+                        cream: '#faf7f2'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .font-serif { font-family: 'Playfair Display', serif; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #fdf8f0; }
+        ::-webkit-scrollbar-thumb { background: #edb97b; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #c27d38; }
+        .page-view { display: none; }
+        .page-view.active { display: block; animation: fadeIn 0.4s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-[#faf7f2] text-chocolate-900 antialiased font-sans selection:bg-amber-300 selection:text-chocolate-900 min-h-screen flex flex-col justify-between">
+
+    <!-- Header & Navigation -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-[#faf7f2]/95 backdrop-blur-md shadow-sm border-b border-amberCustom-200 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" onclick="switchPage('accueil')" class="flex items-center gap-3 group">
+                <div class="w-12 h-12 rounded-full bg-amberCustom-700 flex items-center justify-center text-white shadow-md group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-wheat-awn text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-serif text-xl sm:text-2xl font-bold tracking-tight text-chocolate-900 block">Au Bon Pain</span>
+                    <span class="text-xs uppercase tracking-widest text-amberCustom-700 font-semibold">Sainte-Florence • Vendée</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center gap-5 font-medium text-chocolate-800 text-xs xl:text-sm">
+                <button onclick="switchPage('accueil')" class="nav-link active hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="accueil">Accueil</button>
+                <button onclick="switchPage('boulangerie')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="boulangerie">Boulangerie</button>
+                <button onclick="switchPage('patisserie')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="patisserie">Pâtisserie</button>
+                <button onclick="switchPage('briocherie')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="briocherie">Briocherie</button>
+                <button onclick="switchPage('viennoiseries')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="viennoiseries">Viennoiseries</button>
+                <button onclick="switchPage('sandwicherie')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="sandwicherie">Sandwicherie</button>
+                <button onclick="switchPage('contact')" class="nav-link hover:text-amberCustom-700 transition-colors cursor-pointer" data-page="contact">Contact</button>
+            </nav>
+
+            <!-- Cart & Mobile Actions -->
+            <div class="flex items-center gap-3">
+                <!-- Cart Button -->
+                <button onclick="switchPage('panier')" class="relative bg-amberCustom-100 hover:bg-amberCustom-200 text-chocolate-900 px-4 py-2.5 rounded-full font-medium transition-all flex items-center gap-2 border border-amberCustom-300">
+                    <i class="fa-solid fa-basket-shopping text-amberCustom-700"></i>
+                    <span class="hidden sm:inline text-sm">Panier</span>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-amberCustom-700 text-white text-xs w-6 h-6 rounded-full flex items-center justify-center font-bold shadow-md">0</span>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden text-chocolate-900 text-2xl focus:outline-none p-2">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden lg:hidden bg-[#faf7f2] border-b border-amberCustom-200 px-4 pt-2 pb-6 space-y-3 shadow-lg">
+            <button onclick="switchPage('accueil'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Accueil</button>
+            <button onclick="switchPage('boulangerie'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Boulangerie</button>
+            <button onclick="switchPage('patisserie'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Pâtisserie</button>
+            <button onclick="switchPage('briocherie'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Briocherie & Gâches</button>
+            <button onclick="switchPage('viennoiseries'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Viennoiseries</button>
+            <button onclick="switchPage('sandwicherie'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Sandwicherie & Vitrine</button>
+            <button onclick="switchPage('contact'); toggleMobileMenu();" class="block w-full text-left py-2 text-chocolate-800 font-medium">Contact & Horaires</button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow pt-20">
+
+        <!-- ================= PAGE 1: ACCUEIL ================= -->
+        <div id="page-accueil" class="page-view active">
+            <!-- Hero Section -->
+            <section class="relative pt-12 pb-20 md:pt-20 md:pb-32 overflow-hidden bg-gradient-to-b from-amberCustom-50 via-[#faf7f2] to-[#faf7f2]">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                            <div class="inline-flex items-center gap-2 bg-amberCustom-100 border border-amberCustom-200 text-amberCustom-800 px-4 py-1.5 rounded-full text-sm font-semibold tracking-wide">
+                                <i class="fa-solid fa-award"></i> 100% Fait Maison & Artisanal • Sainte-Florence
+                            </div>
+                            <h1 class="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-chocolate-900 leading-tight">
+                                L'art du bon pain et des <span class="text-amberCustom-700 italic">douceurs vendéennes</span>
+                            </h1>
+                            <p class="text-lg text-chocolate-800/80 max-w-2xl mx-auto lg:mx-0">
+                                Bienvenue chez <strong class="text-chocolate-900">Au Bon Pain de Florence</strong>. Pains de tradition sur levain naturel, viennoiseries dorées au beurre, pâtisseries fines et gâches vendéennes vous attendent au bourg.
+                            </p>
+                            <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                                <button onclick="switchPage('boulangerie')" class="w-full sm:w-auto bg-amberCustom-700 hover:bg-amberCustom-800 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:shadow-xl transition-all text-center flex items-center justify-center gap-3">
+                                    <span>Commander en Click & Collect</span>
+                                    <i class="fa-solid fa-arrow-right"></i>
+                                </button>
+                                <button onclick="switchPage('sandwicherie')" class="w-full sm:w-auto bg-white hover:bg-amberCustom-50 border-2 border-amberCustom-300 text-chocolate-900 px-8 py-3.5 rounded-full font-semibold transition-all text-center">
+                                    Voir la Vitrine Sandwicherie
+                                </button>
+                            </div>
+                            
+                            <div class="grid grid-cols-3 gap-4 pt-8 border-t border-amberCustom-200/60 max-w-lg mx-auto lg:mx-0">
+                                <div class="text-center lg:text-left">
+                                    <p class="font-serif text-2xl font-bold text-amberCustom-700">Artisan</p>
+                                    <p class="text-xs text-chocolate-800/70 font-medium">Boulanger Pâtissier</p>
+                                </div>
+                                <div class="text-center lg:text-left border-x border-amberCustom-200/60 px-2">
+                                    <p class="font-serif text-2xl font-bold text-amberCustom-700">Pur Beurre</p>
+                                    <p class="text-xs text-chocolate-800/70 font-medium">Charentes-Poitou</p>
+                                </div>
+                                <div class="text-center lg:text-left">
+                                    <p class="font-serif text-2xl font-bold text-amberCustom-700">Levain</p>
+                                    <p class="text-xs text-chocolate-800/70 font-medium">Naturel & Tradition</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="lg:col-span-5 relative">
+                            <div class="relative mx-auto max-w-md lg:max-w-none">
+                                <div class="rounded-3xl overflow-hidden shadow-2xl border-4 border-white aspect-[4/5]">
+                                    <img src="img/Baguettes-artisanales.jpg" 
+                                         alt="Baguettes artisanales" 
+                                         class="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                                         onerror="this.src='https://placehold.co/600x750/edb97b/3d2314?text=Au+Bon+Pain+de+Florence'">
+                                </div>
+                                <div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-amberCustom-200 flex items-center gap-3">
+                                    <div class="w-12 h-12 rounded-xl bg-amberCustom-100 text-amberCustom-700 flex items-center justify-center text-xl font-bold">
+                                        <i class="fa-solid fa-fire-burner"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs text-gray-500 font-semibold uppercase">Sortie du four</p>
+                                        <p class="font-serif font-bold text-chocolate-900">Cuisson toute la journée !</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rayons Section -->
+            <section class="py-20 bg-white">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center max-w-3xl mx-auto mb-16">
+                        <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Nos Rayons Artisanaux</span>
+                        <h2 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-4">Explorez notre univers gourmand</h2>
+                        <p class="text-chocolate-800/80">Commandez vos pains, viennoiseries, gâches et pâtisseries en ligne, ou découvrez nos sandwichs.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div onclick="switchPage('boulangerie')" class="cursor-pointer bg-[#faf7f2] rounded-3xl p-6 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6 relative">
+                                <img src="img/pain-auvergnate.jpg" alt="Boulangerie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full">Boulangerie</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-chocolate-900 mb-2 group-hover:text-amberCustom-700 transition-colors">Pains & Baguettes <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                            <p class="text-sm text-chocolate-800/80">Tradition, levain naturel et pains spéciaux biologiques.</p>
+                        </div>
+
+                        <div onclick="switchPage('viennoiseries')" class="cursor-pointer bg-[#faf7f2] rounded-3xl p-6 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6 relative">
+                                <img src="img/croissant.jpg" alt="Viennoiseries" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full">Viennoiserie</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-chocolate-900 mb-2 group-hover:text-amberCustom-700 transition-colors">Viennoiseries Pur Beurre <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                            <p class="text-sm text-chocolate-800/80">Croissants croustillants, pains au chocolat et chaussons.</p>
+                        </div>
+
+                        <div onclick="switchPage('briocherie')" class="cursor-pointer bg-[#faf7f2] rounded-3xl p-6 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6 relative">
+                                <img src="img/brioche-artisanale.jpg" alt="Briocherie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full">Spécialité</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-chocolate-900 mb-2 group-hover:text-amberCustom-700 transition-colors">Briocherie & Gâches <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                            <p class="text-sm text-chocolate-800/80">La gâche vendéenne dorée et brioches tressées maison.</p>
+                        </div>
+
+                        <div onclick="switchPage('patisserie')" class="cursor-pointer bg-[#faf7f2] rounded-3xl p-6 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6 relative">
+                                <img src="img/eclair-chocolat.jpg" alt="Pâtisserie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full">Pâtisserie</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-chocolate-900 mb-2 group-hover:text-amberCustom-700 transition-colors">Pâtisseries & Entremets <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                            <p class="text-sm text-chocolate-800/80">Éclairs, tartelettes aux fruits et gâteaux 8 parts.</p>
+                        </div>
+
+                        <div onclick="switchPage('sandwicherie')" class="cursor-pointer bg-[#faf7f2] rounded-3xl p-6 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all duration-300 group">
+                            <div class="rounded-2xl overflow-hidden aspect-[4/3] mb-6 relative">
+                                <img src="img/sandwich-jambon.jpg" alt="Sandwicherie" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full">Vitrine Midi</span>
+                            </div>
+                            <h3 class="font-serif text-xl font-bold text-chocolate-900 mb-2 group-hover:text-amberCustom-700 transition-colors">Sandwicherie (Vitrine) <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                            <p class="text-sm text-chocolate-800/80">Découvrez nos sandwichs frais préparés chaque matin.</p>
+                        </div>
+
+                        <div onclick="switchPage('contact')" class="cursor-pointer bg-gradient-to-br from-amberCustom-700 to-amberCustom-900 text-white rounded-3xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 group flex flex-col justify-between">
+                            <div>
+                                <span class="bg-white/25 text-white text-xs font-bold px-3 py-1 rounded-full inline-block mb-4">Informations</span>
+                                <h3 class="font-serif text-2xl font-bold mb-2">Venir à la Boutique <i class="fa-solid fa-arrow-right text-xs ml-1"></i></h3>
+                                <p class="text-sm text-amberCustom-100/90">15 Rue de l'Église, Sainte-Florence. Ouvert du mardi au dimanche.</p>
+                            </div>
+                            <div class="pt-6">
+                                <span class="bg-white text-chocolate-900 font-semibold px-4 py-2 rounded-xl text-xs inline-flex items-center gap-2">
+                                    <i class="fa-solid fa-phone"></i> Nous contacter
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- ================= PAGE 2: BOULANGERIE ================= -->
+        <div id="page-boulangerie" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Rayon Boulangerie</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-3">Nos Pains & Baguettes Artisanales</h1>
+                <p class="text-chocolate-800/80">Pains façonnés à la main, cuisson sur sole de pierre, fermentation lente au levain naturel. Réservez en Click & Collect.</p>
+            </div>
+            <div id="grid-boulangerie" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: PATISSERIE ================= -->
+        <div id="page-patisserie" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Rayon Pâtisserie</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-3">Éclairs, Tartelettes & Gâteaux 8 parts</h1>
+                <p class="text-chocolate-800/80">Pâtisseries fines et entremets créés par votre artisan pour toutes vos occasions.</p>
+            </div>
+            <div id="grid-patisserie" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 4: BRIOCHERIE ================= -->
+        <div id="page-briocherie" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Rayon Briocherie</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-3">Gâches & Brioches Vendéennes</h1>
+                <p class="text-chocolate-800/80">La grande tradition de notre région avec du beurre AOP Charentes-Poitou.</p>
+            </div>
+            <div id="grid-briocherie" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 5: VIENNOISERIES ================= -->
+        <div id="page-viennoiseries" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Rayon Viennoiseries</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-3">Croissants & Feuilletages Pur Beurre</h1>
+                <p class="text-chocolate-800/80">Sortis chauds du labo chaque matin, croustillants et fondants à souhait.</p>
+            </div>
+            <div id="grid-viennoiseries" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <!-- Dynamically populated via JS -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 6: SANDWICHERIE (VITRINE PURE SANS PANIER) ================= -->
+        <div id="page-sandwicherie" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-12">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Rayon Sandwicherie & Midi</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-3">Notre Vitrine de Sandwichs Frais</h1>
+                <p class="text-chocolate-800/80">Préparés chaque matin avec nos baguettes de tradition. <span class="text-amberCustom-800 font-semibold">(Présentation en vitrine uniquement, non commandable en ligne)</span>.</p>
+            </div>
+            <div id="grid-sandwicherie" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Dynamically populated via JS (vitrine mode) -->
+            </div>
+        </div>
+
+        <!-- ================= PAGE 7: PANIER & CLICK & COLLECT ================= -->
+        <div id="page-panier" class="page-view py-12 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Click & Collect</span>
+                <h1 class="font-serif text-3xl font-bold text-chocolate-900 mb-2">Votre Panier & Réservation</h1>
+                <p class="text-chocolate-800/80 text-sm">Vérifiez vos articles de boulangerie, viennoiseries, brioches et pâtisseries, puis choisissez votre créneau de retrait à Sainte-Florence.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <!-- Cart Items List -->
+                <div class="lg:col-span-7 bg-white p-6 rounded-3xl shadow-sm border border-amberCustom-200">
+                    <h2 class="font-serif text-xl font-bold text-chocolate-900 mb-4 pb-3 border-b border-amberCustom-100 flex items-center justify-between">
+                        <span>Articles sélectionnés</span>
+                        <span id="cart-count-title" class="text-xs bg-amberCustom-100 text-amberCustom-800 px-2.5 py-1 rounded-full font-sans">0 article</span>
+                    </h2>
+                    
+                    <div id="cart-items-container" class="space-y-4 max-h-[400px] overflow-y-auto pr-2">
+                        <!-- Populated via JS -->
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t border-amberCustom-200 flex items-center justify-between font-serif text-xl font-bold text-chocolate-900">
+                        <span>Total à régler sur place :</span>
+                        <span id="cart-total-price" class="text-amberCustom-700">0,00 €</span>
+                    </div>
+                </div>
+
+                <!-- Click & Collect Form -->
+                <div class="lg:col-span-5 bg-gradient-to-br from-amberCustom-100 to-amberCustom-50 p-6 rounded-3xl shadow-lg border border-amberCustom-200">
+                    <h2 class="font-serif text-xl font-bold text-chocolate-900 mb-4 pb-3 border-b border-amberCustom-200">
+                        <i class="fa-solid fa-clock-rotate-left mr-2 text-amberCustom-700"></i> Retrait en Boulangerie
+                    </h2>
+
+                    <form id="checkout-form" onsubmit="handleCheckout(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-chocolate-900 mb-1">Nom et Prénom *</label>
+                            <input type="text" id="chk-name" required class="w-full px-3 py-2.5 rounded-xl border border-amberCustom-300 bg-white text-sm focus:ring-2 focus:ring-amberCustom-700 focus:outline-none" placeholder="Ex: Marie Dupont">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-chocolate-900 mb-1">Téléphone (SMS de confirmation) *</label>
+                            <input type="tel" id="chk-phone" required class="w-full px-3 py-2.5 rounded-xl border border-amberCustom-300 bg-white text-sm focus:ring-2 focus:ring-amberCustom-700 focus:outline-none" placeholder="Ex: 06 12 34 56 78">
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold text-chocolate-900 mb-1">Date de retrait *</label>
+                                <input type="date" id="chk-date" required class="w-full px-3 py-2.5 rounded-xl border border-amberCustom-300 bg-white text-sm focus:ring-2 focus:ring-amberCustom-700 focus:outline-none">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-chocolate-900 mb-1">Créneau horaire *</label>
+                                <select id="chk-time" required class="w-full px-3 py-2.5 rounded-xl border border-amberCustom-300 bg-white text-sm focus:ring-2 focus:ring-amberCustom-700 focus:outline-none">
+                                    <option value="">-- Choisir --</option>
+                                    <option value="07h00 - 08h00">07h00 - 08h00</option>
+                                    <option value="08h00 - 09h00">08h00 - 09h00</option>
+                                    <option value="09h00 - 10h00">09h00 - 10h00</option>
+                                    <option value="10h00 - 11h00">10h00 - 11h00</option>
+                                    <option value="11h00 - 12h00">11h00 - 12h00</option>
+                                    <option value="12h00 - 13h00">12h00 - 13h00</option>
+                                    <option value="16h30 - 18h00">16h30 - 18h00</option>
+                                    <option value="18h00 - 19h30">18h00 - 19h30</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-chocolate-900 mb-1">Remarques (ex: bien cuite, tranché...)</label>
+                            <input type="text" id="chk-notes" class="w-full px-3 py-2.5 rounded-xl border border-amberCustom-300 bg-white text-sm focus:ring-2 focus:ring-amberCustom-700 focus:outline-none" placeholder="Instructions particulières...">
+                        </div>
+
+                        <button type="submit" id="checkout-btn" class="w-full bg-amberCustom-700 hover:bg-amberCustom-800 text-white font-semibold py-3.5 rounded-xl shadow-lg transition-all text-center flex items-center justify-center gap-2 text-sm mt-4">
+                            <i class="fa-solid fa-check-circle"></i> Valider ma commande Click & Collect
+                        </button>
+                    </form>
+
+                    <!-- Success Receipt Box (Hidden initially) -->
+                    <div id="checkout-success" class="hidden bg-white p-6 rounded-2xl shadow-xl border-2 border-green-500 text-center space-y-3">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-xl mx-auto">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-chocolate-900">Commande validée avec succès !</h3>
+                        <p id="success-receipt-details" class="text-xs text-chocolate-800 leading-relaxed"></p>
+                        <div class="bg-amberCustom-50 p-3 rounded-xl text-xs text-amberCustom-900 font-medium">
+                            <i class="fa-solid fa-coins mr-1"></i> Paiement en magasin lors du retrait à Sainte-Florence.
+                        </div>
+                        <button onclick="resetAndGoHome()" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Retour à l'accueil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 8: CONTACT & HORAIRES ================= -->
+        <div id="page-contact" class="page-view py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Informations Pratiques</span>
+                <h1 class="font-serif text-3xl sm:text-4xl font-bold text-chocolate-900 mb-4">Contact & Horaires à Sainte-Florence</h1>
+                <p class="text-chocolate-800/80">Retrouvez-nous au cœur du bourg pour vos achats quotidiens de pain frais et de douceurs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <div class="lg:col-span-6 bg-white p-8 rounded-3xl shadow-lg border border-amberCustom-200 space-y-6">
+                    <h3 class="font-serif text-2xl font-bold text-chocolate-900 flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-amberCustom-100 text-amberCustom-700 flex items-center justify-center text-lg">
+                            <i class="fa-solid fa-store"></i>
+                        </div>
+                        Au Bon Pain de Florence
+                    </h3>
+
+                    <div class="space-y-4 text-sm text-chocolate-800/90 border-t border-amberCustom-100 pt-4">
+                        <div class="flex items-start gap-4">
+                            <div class="text-amberCustom-700 text-lg mt-0.5"><i class="fa-solid fa-location-dot"></i></div>
+                            <div>
+                                <p class="font-bold text-chocolate-900">Adresse :</p>
+                                <p>15 Rue de l'Église, Sainte-Florence<br>85250 Essarts en Bocage, Vendée</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="text-amberCustom-700 text-lg mt-0.5"><i class="fa-solid fa-phone"></i></div>
+                            <div>
+                                <p class="font-bold text-chocolate-900">Téléphone :</p>
+                                <p>02 51 40 XX XX</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="text-amberCustom-700 text-lg mt-0.5"><i class="fa-solid fa-clock"></i></div>
+                            <div>
+                                <p class="font-bold text-chocolate-900">Horaires d'ouverture :</p>
+                                <ul class="space-y-1 mt-1">
+                                    <li class="flex justify-between gap-8"><span>Mardi au Vendredi :</span> <span class="font-semibold">06h30 - 13h00 | 16h00 - 19h30</span></li>
+                                    <li class="flex justify-between gap-8"><span>Samedi :</span> <span class="font-semibold">07h00 - 13h00 | 16h00 - 19h00</span></li>
+                                    <li class="flex justify-between gap-8"><span>Dimanche :</span> <span class="font-semibold">07h00 - 13h00</span></li>
+                                    <li class="flex justify-between gap-8 text-amberCustom-800 font-medium"><span>Lundi :</span> <span>Fermé (Repos hebdomadaire)</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 bg-white p-8 rounded-3xl shadow-lg border border-amberCustom-200">
+                    <h3 class="font-serif text-2xl font-bold text-chocolate-900 mb-2">Envoyez-nous un message</h3>
+                    <p class="text-sm text-chocolate-800/80 mb-6">Une question sur une commande spéciale ou un gâteau d'anniversaire ? Écrivez-nous.</p>
+
+                    <form onsubmit="handleContact(event)" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-chocolate-900 mb-1">Votre Nom *</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-amberCustom-300 focus:outline-none focus:ring-2 focus:ring-amberCustom-700 text-sm" placeholder="Nom">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-chocolate-900 mb-1">Email ou Téléphone *</label>
+                            <input type="text" required class="w-full px-4 py-3 rounded-xl border border-amberCustom-300 focus:outline-none focus:ring-2 focus:ring-amberCustom-700 text-sm" placeholder="Contact">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-chocolate-900 mb-1">Votre Message *</label>
+                            <textarea rows="4" required class="w-full px-4 py-3 rounded-xl border border-amberCustom-300 focus:outline-none focus:ring-2 focus:ring-amberCustom-700 text-sm" placeholder="Votre message..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-amberCustom-700 hover:bg-amberCustom-800 text-white font-semibold py-3.5 rounded-xl shadow-md transition-all text-center">
+                            <i class="fa-regular fa-paper-plane mr-2"></i> Envoyer le message
+                        </button>
+                    </form>
+                    <div id="contact-success" class="hidden mt-4 p-4 bg-green-100 text-green-800 rounded-xl text-center text-sm font-medium">
+                        <i class="fa-solid fa-circle-check mr-2"></i> Votre message a bien été envoyé !
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-chocolate-900 text-amberCustom-100 py-12 border-t border-chocolate-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div class="md:col-span-2 space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-amberCustom-700 flex items-center justify-center text-white">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                        </div>
+                        <span class="font-serif text-xl font-bold text-white">Au Bon Pain de Florence</span>
+                    </div>
+                    <p class="text-xs text-amberCustom-200/80 max-w-sm leading-relaxed">
+                        Boulangerie • Pâtisserie • Briocherie • Viennoiseries • Sandwicherie artisanale située à Sainte-Florence en Vendée (85250). Fait maison au quotidien.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Navigation</h4>
+                    <ul class="space-y-2 text-xs text-amberCustom-200/80">
+                        <li><button onclick="switchPage('accueil')" class="hover:text-white transition-colors">Accueil</button></li>
+                        <li><button onclick="switchPage('boulangerie')" class="hover:text-white transition-colors">Boulangerie</button></li>
+                        <li><button onclick="switchPage('viennoiseries')" class="hover:text-white transition-colors">Viennoiseries</button></li>
+                        <li><button onclick="switchPage('patisserie')" class="hover:text-white transition-colors">Pâtisserie</button></li>
+                        <li><button onclick="switchPage('sandwicherie')" class="hover:text-white transition-colors">Sandwicherie</button></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Localisation</h4>
+                    <ul class="space-y-2 text-xs text-amberCustom-200/80">
+                        <li>15 Rue de l'Église</li>
+                        <li>85250 Sainte-Florence</li>
+                        <li>Essarts en Bocage (Vendée)</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-chocolate-800 pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-amberCustom-200/60">
+                <p>&copy; 2026 Au Bon Pain de Florence. Tous droits réservés.</p>
+                <p class="mt-2 sm:mt-0">Artisan Boulanger Pâtissier en Vendée</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Product Database for Click & Collect with strict accurate product images
+        const productsDatabase = {
+            boulangerie: [
+                { id: 'b1', name: 'Baguette Classique', price: 0.95, desc: 'La baguette blanche classique et croustillante.', img: 'img/Baguettes-classique.jpg', badge: 'Quotidien' },
+                { id: 'b2', name: 'Baguette Tradition française', price: 1.20, desc: 'Farine de tradition, alvéolée, croustillant supérieur et longue conservation.', img: 'img/Baguettes-tradition.jpg', badge: '100% Local' },
+                { id: 'b3', name: 'Pain Complet Bio', price: 2.10, desc: 'Riche en fibres, farine de blé complet biologique sur meule de pierre.', img: 'img/pain-complet.jpg', badge: 'Bio' },
+                { id: 'b4', name: 'Pain de Campagne au Levain', price: 2.30, desc: 'Croûte dorée épaisse, mie souple acidulée au levain naturel.', img: 'img/pain-campagne.jpg', badge: 'Levain Naturel' },
+                { id: 'b5', name: 'Boule de Pain Auvergnate', price: 2.50, desc: 'Grosse boule rustique idéale pour la conservation et le partage.', img: 'img/pain-auvergnate.jpg', badge: 'Tradition' },
+                { id: 'b6', name: 'Pain aux Céréales & Graines', price: 2.40, desc: 'Mélange de lin, tournesol, sésame et millet torréfiés.', img: 'img/pain-cereals.jpg', badge: 'Riche en Graines' }
+            ],
+            viennoiseries: [
+                { id: 'v1', name: 'Croissant Pur Beurre', price: 1.10, desc: 'Feuilletage croustillant et alvéolé au beurre AOP Charentes-Poitou.', img: 'img/croissant.jpg', badge: 'Pur Beurre' },
+                { id: 'v2', name: 'Pain au Chocolat', price: 1.25, desc: 'Deux bâtons de chocolat noir fin enrobés d’une pâte feuilletée dorée.', img: 'img/pain-chocolat.jpg', badge: 'Incontournable' },
+                { id: 'v3', name: 'Pain aux Raisins (Escargot)', price: 1.40, desc: 'Crème pâtissière onctueuse et raisins secs macérés.', img: 'img/pain-raisins.jpg', badge: 'Gourmand' },
+                { id: 'v4', name: 'Chausson aux Pommes', price: 1.50, desc: 'Compote de pommes maison enveloppée d’un feuilletage croustillant dorée.', img: 'img/chausson-pommes.jpg', badge: 'Fait Maison' },
+                { id: 'v5', name: 'Briochette aux Pépites de Chocolat', price: 1.30, desc: 'Petite brioche individuelle généreusement garnie de pépites de chocolat.', img: 'img/briochette-chocolat.jpg', badge: 'Goûter' }
+            ],
+            briocherie: [
+                { id: 'br1', name: 'La Gâche Vendéenne Artisanale (400g)', price: 5.80, desc: 'La spécialité vendéenne par excellence, brioche dorée à la mie très filante.', img: 'img/brioche-artisanale.jpg', badge: 'Spécialité Vendée' },
+                { id: 'br2', name: 'Brioche Tressée au Beurre AOP', price: 4.90, desc: 'Pur beurre Charentes-Poitou, sucre perlé sur le dessus.', img: 'img/brioche-tressee.jpg', badge: 'Pur Beurre' },
+                { id: 'br3', name: 'Brioche aux Pralines Roses', price: 6.20, desc: 'Brioche gourmande parsemée de pralines roses concassées.', img: 'img/brioche-praline.jpg', badge: 'Gourmandise' }
+            ],
+            patisserie: [
+                { id: 'p1', name: 'Éclair au Chocolat Noir', price: 3.50, desc: 'Pâte à choux croustillante, crème pâtissière riche au chocolat noir.', img: 'img/eclair-chocolat.jpg', badge: 'Fait Maison' },
+                { id: 'p2', name: 'Éclair au Café', price: 3.50, desc: 'Glaçage café fondant et crème pâtissière parfumée à l\'extrait de café pur.', img: 'img/eclair-cafe.jpg', badge: 'Classique' },
+                { id: 'p3', name: 'Tartelette Fruits de Saison / Citron', price: 4.20, desc: 'Pâte sablée pur beurre, crème onctueuse et fruits frais ou lemon curd.', img: 'img/tartelette-fruits.jpg', badge: 'De Saison' },
+                { id: 'p4', name: 'Gâteau 8 parts / Entremets (3 Chocolats)', price: 24.00, desc: 'Entremets gourmand 8 parts idéal pour vos anniversaires et familles.', img: 'img/entremet.jpg', badge: '8 parts' }
+            ]
+        };
+
+        // Sandwicherie Showcase (Vitrine informative uniquement, AUCUN panier)
+        const sandwicherieVitrine = [
+            { name: 'Le Traditionnel Jambon-Beurre', price: 4.20, desc: 'Baguette classique croustillante, jambon blanc supérieur et beurre fin AOP.', img: 'img/sandwich-jambon.jpg', badge: 'Incontournable' },
+            { name: 'Le Vendéen au Camembert & Jambon de Pays', price: 5.20, desc: 'Pain de tradition, camembert au lait cru, jambon de pays vendéen et salade.', img: 'img/sandwich-vendeen.jpg', badge: 'Spécialité Locale' },
+            { name: 'Le Poulet Crudités', price: 4.80, desc: 'Émincé de poulet rôti, tomates fraîches, salade croquante, mayonnaise légère.', img: 'img/sandwich-poulet.jpg', badge: 'Frais du jour' },
+            { name: 'Le Saumon Avocat', price: 5.60, desc: 'Pain aux graines, tranches de saumon fumé, avocat frais et touche de citron.', img: 'img/sandwich-saumon.jpg', badge: 'Gourmet' }
+        ];
+
+        // Récupérer le panier sauvegardé au chargement (ou un tableau vide si rien n'existe)
+		let cart = JSON.parse(localStorage.getItem('boulangerie_cart')) || [];
+		
+		// Au chargement complet du script ou de la page, on met à jour l'interface avec les données du localStorage
+		document.addEventListener('DOMContentLoaded', () => {
+			updateCartBadge(); 
+		});
+
+
+		function saveCart() {
+			localStorage.setItem('boulangerie_cart', JSON.stringify(cart));
+		}
+
+        // Render Product Grids on Load
+        function renderCatalogs() {
+            for (const [category, items] of Object.entries(productsDatabase)) {
+                const container = document.getElementById(`grid-${category}`);
+                if (!container) continue;
+                container.innerHTML = items.map(item => `
+                    <div class="bg-white rounded-3xl p-5 border border-amberCustom-200 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-4">
+                                <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x300/edb97b/3d2314?text=Boulangerie'">
+                                <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-chocolate-900 text-xs font-bold px-3 py-1 rounded-full shadow-sm">${item.badge}</span>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-chocolate-900 mb-1">${item.name}</h3>
+                            <p class="text-xs text-chocolate-800/80 mb-3 line-clamp-2">${item.desc}</p>
+                        </div>
+                        <div class="pt-4 border-t border-amberCustom-100 flex items-center justify-between">
+                            <span class="font-serif text-lg font-bold text-amberCustom-700">${item.price.toFixed(2)} €</span>
+                            <div class="flex items-center gap-2">
+                                <input type="number" id="qty-${item.id}" min="1" value="1" class="w-14 text-center px-2 py-1.5 rounded-lg border border-amberCustom-300 text-sm font-semibold">
+                                <button onclick="addToCart('${item.id}', '${category}')" class="bg-amberCustom-700 hover:bg-amberCustom-800 text-white w-9 h-9 rounded-full flex items-center justify-center transition-all shadow-sm cursor-pointer" title="Ajouter au panier">
+                                    <i class="fa-solid fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Render Sandwicherie Showcase (Vitrine informative - SANS panier)
+            const sandwichContainer = document.getElementById('grid-sandwicherie');
+            if (sandwichContainer) {
+                sandwichContainer.innerHTML = sandwicherieVitrine.map(item => `
+                    <div class="bg-white rounded-3xl p-5 border border-amberCustom-200 shadow-sm hover:shadow-md flex flex-col justify-between">
+                        <div>
+                            <div class="relative rounded-2xl overflow-hidden aspect-[4/3] mb-4">
+                                <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/400x300/edb97b/3d2314?text=Sandwich'">
+                                <span class="absolute top-3 left-3 bg-amberCustom-100 text-amberCustom-800 text-xs font-bold px-3 py-1 rounded-full shadow-sm">${item.badge}</span>
+                            </div>
+                            <h3 class="font-serif text-lg font-bold text-chocolate-900 mb-1">${item.name}</h3>
+                            <p class="text-xs text-chocolate-800/80 mb-3">${item.desc}</p>
+                        </div>
+                        <div class="pt-4 border-t border-amberCustom-100 flex items-center justify-between">
+                            <span class="font-serif text-lg font-bold text-amberCustom-700">${item.price.toFixed(2)} €</span>
+                            <span class="text-xs bg-amberCustom-50 text-amberCustom-800 border border-amberCustom-200 px-3 py-1.5 rounded-full font-medium">
+                                <i class="fa-solid fa-store mr-1"></i> En vitrine sur place
+                            </span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Switch SPA Pages
+        function switchPage(pageId) {
+            const pages = document.querySelectorAll('.page-view');
+            pages.forEach(p => p.classList.remove('active'));
+
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) {
+                targetPage.classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            // Update nav links active styling
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(l => {
+                if(l.getAttribute('data-page') === pageId) {
+                    l.classList.add('text-amberCustom-700', 'font-bold');
+                } else {
+                    l.classList.remove('text-amberCustom-700', 'font-bold');
+                }
+            });
+        }
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if(mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+        function toggleMobileMenu() {
+            if(mobileMenu) mobileMenu.classList.add('hidden');
+        }
+
+        // Add to Cart Logic
+        function addToCart(productId, category) {
+            const item = productsDatabase[category].find(p => p.id === productId);
+            const qtyInput = document.getElementById(`qty-${productId}`);
+            const qty = parseInt(qtyInput ? qtyInput.value : 1) || 1;
+
+            const existingIndex = cart.findIndex(c => c.id === productId);
+            if (existingIndex > -1) {
+                cart[existingIndex].qty += qty;
+            } else {
+                cart.push({ ...item, qty });
+            }
+
+            updateCartBadge();
+            renderCartItems();
+			saveCart();
+
+            // Visual feedback
+            const btn = event.currentTarget;
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check text-xs"></i>';
+            btn.classList.add('bg-green-600');
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-green-600');
+            }, 1000);
+        }
+
+        // Update Cart Badge
+        function updateCartBadge() {
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const badge = document.getElementById('cart-badge');
+            if(badge) badge.innerText = totalCount;
+        }
+
+        // Render Cart Items on Panier Page
+        function renderCartItems() {
+            const container = document.getElementById('cart-items-container');
+            const titleCount = document.getElementById('cart-count-title');
+            const totalPriceEl = document.getElementById('cart-total-price');
+            if(!container) return;
+
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            titleCount.innerText = `${totalCount} article${totalCount > 1 ? 's' : ''}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 space-y-3">
+                        <div class="w-16 h-16 bg-amberCustom-100 text-amberCustom-700 rounded-full flex items-center justify-center text-2xl mx-auto">
+                            <i class="fa-solid fa-basket-shopping"></i>
+                        </div>
+                        <p class="text-chocolate-800 font-medium text-sm">Votre panier est actuellement vide.</p>
+                        <button onclick="switchPage('boulangerie')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Découvrir la boulangerie
+                        </button>
+                    </div>
+                `;
+                totalPriceEl.innerText = '0,00 €';
+                return;
+            }
+
+            let total = 0;
+            container.innerHTML = cart.map((item, index) => {
+                const subtotal = item.price * item.qty;
+                total += subtotal;
+                return `
+                    <div class="flex items-center justify-between gap-4 p-3 rounded-xl bg-amberCustom-50/50 border border-amberCustom-100">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.img}" class="w-12 h-12 rounded-lg object-cover" onerror="this.src='https://placehold.co/100x100/edb97b/3d2314?text=Pain'">
+                            <div>
+                                <h4 class="font-serif font-bold text-chocolate-900 text-sm">${item.name}</h4>
+                                <p class="text-xs text-amberCustom-800">${item.price.toFixed(2)} € l'unité</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center border border-amberCustom-300 rounded-lg bg-white overflow-hidden">
+                                <button onclick="updateQty(${index}, -1)" class="px-2.5 py-1 text-xs hover:bg-amberCustom-100">-</button>
+                                <span class="px-3 text-xs font-bold">${item.qty}</span>
+                                <button onclick="updateQty(${index}, 1)" class="px-2.5 py-1 text-xs hover:bg-amberCustom-100">+</button>
+                            </div>
+                            <span class="font-bold text-sm w-16 text-right">${subtotal.toFixed(2)} €</span>
+                            <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700 p-1 text-xs"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            totalPriceEl.innerText = total.toFixed(2) + ' €';
+        }
+
+        function updateQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            updateCartBadge();
+            renderCartItems();
+			saveCart();
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartBadge();
+            renderCartItems();
+			saveCart();
+        }
+
+        // Set min date for checkout to today
+        const todayStr = new Date().toISOString().split('T')[0];
+        document.addEventListener('DOMContentLoaded', () => {
+            const dateInput = document.getElementById('chk-date');
+            if (dateInput) {
+                dateInput.min = todayStr;
+                dateInput.value = todayStr;
+            }
+            renderCatalogs();
+            renderCartItems();
+        });
+
+        // Handle Click & Collect Checkout Form
+        function handleCheckout(event) {
+            event.preventDefault();
+            if (cart.length === 0) return;
+
+            const name = document.getElementById('chk-name').value;
+            const phone = document.getElementById('chk-phone').value;
+            const date = document.getElementById('chk-date').value;
+            const time = document.getElementById('chk-time').value;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0).toFixed(2);
+
+            document.getElementById('checkout-form').classList.add('hidden');
+            const successBox = document.getElementById('checkout-success');
+            successBox.classList.remove('hidden');
+
+            document.getElementById('success-receipt-details').innerHTML = `
+                Merci <strong>${name}</strong> ! Votre commande de <strong>${cart.length} article(s)</strong> pour un total de <strong class="text-amberCustom-700">${total} €</strong> est enregistrée.<br>
+                Retrait prévu le <strong>${date}</strong> entre <strong>${time}</strong> à la boulangerie de Sainte-Florence.<br>
+                Un SMS de confirmation sera envoyé au <strong>${phone}</strong>.
+            `;
+
+            cart = [];
+            updateCartBadge();
+			saveCart();
+        }
+
+        function resetAndGoHome() {
+            document.getElementById('checkout-form').reset();
+            document.getElementById('checkout-form').classList.remove('hidden');
+            document.getElementById('checkout-success').classList.add('hidden');
+            document.getElementById('chk-date').value = todayStr;
+            switchPage('accueil');
+        }
+
+        // Contact Form
+        function handleContact(event) {
+            event.preventDefault();
+            const success = document.getElementById('contact-success');
+            if(success) {
+                success.classList.remove('hidden');
+                event.target.reset();
+                setTimeout(() => success.classList.add('hidden'), 5000);
+            }
+        }
+    </script>
+</body>
+</html>
