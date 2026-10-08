@@ -132,9 +132,9 @@
                                     <span>Commander en Click & Collect</span>
                                     <i class="fa-solid fa-arrow-right"></i>
                                 </button>
-                                <button onclick="switchPage('sandwicherie')" class="w-full sm:w-auto bg-white hover:bg-amberCustom-50 border-2 border-amberCustom-300 text-chocolate-900 px-8 py-3.5 rounded-full font-semibold transition-all text-center">
-                                    Voir la Vitrine Sandwicherie
-                                </button>
+                                <!--  <button onclick="switchPage('sandwicherie')" class="w-full sm:w-auto bg-white hover:bg-amberCustom-50 border-2 border-amberCustom-300 text-chocolate-900 px-8 py-3.5 rounded-full font-semibold transition-all text-center">
+                                    Voir la Vitrine
+                                </button> -->
                             </div>
                             
                             <div class="grid grid-cols-3 gap-4 pt-8 border-t border-amberCustom-200/60 max-w-lg mx-auto lg:mx-0">
@@ -177,7 +177,7 @@
             </section>
 
             <!-- Rayons Section -->
-            <section class="py-20 bg-white">
+            <section class="py-20 bg-white" id="rayon">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="text-center max-w-3xl mx-auto mb-16">
                         <span class="text-amberCustom-700 uppercase tracking-widest font-semibold text-sm block mb-2">Nos Rayons Artisanaux</span>
@@ -711,7 +711,24 @@
                         <button onclick="switchPage('boulangerie')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
                             Découvrir la boulangerie
                         </button>
+						<br/>
+						<button onclick="switchPage('patisserie')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Découvrir nos pâtisseries
+                        </button>
+						<br/>
+						<button onclick="switchPage('briocherie')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Découvrir nos brioches
+                        </button>
+						<br/>
+						<button onclick="switchPage('viennoiseries')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Découvrir nos viennoiseries
+                        </button>
+						<br/>
+						<button onclick="switchPage('sandwicherie')" class="bg-amberCustom-700 text-white px-5 py-2 rounded-full text-xs font-semibold shadow hover:bg-amberCustom-800 transition-all">
+                            Découvrir nos sandwich
+                        </button>
                     </div>
+
                 `;
                 totalPriceEl.innerText = '0,00 €';
                 return;
